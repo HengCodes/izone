@@ -1,0 +1,65 @@
+{% extends "blog/base.html" %}
+{% load static %}
+{% load humanize %}
+{% load blog_tags %}
+
+{% block head_title %}{% endblock %}
+{% block metas %}
+{% endblock %}
+
+{% block top-file %}
+<link href="{% static 'tool/css/tool.css' %}?v=20180107.074679" rel="stylesheet">
+{% endblock %}
+{% block base_content %}
+<div class="container-fluid">
+	<div class="row-fluid">
+		<div class="blog_nav col-md-2">
+            <a href="#" class="list-group-item active">
+            Python3基础
+            </a>
+            <a href="#" class="list-group-item">Python3</a>
+            <a href="#" class="list-group-item">Python3</a>
+            <a href="#" class="list-group-item">Python3</a>
+            <a href="#" class="list-group-item">Python3</a>
+
+		</div>
+		<div class="blog_body  col-md-8">
+            <h1>Example heading <span class="badge badge-secondary">阅读量 1</span></h1>
+            <br>
+            <hr>
+			<dl>
+				<dt>
+					Rolex
+				</dt>
+				<dd>
+					劳力士创始人为汉斯.威尔斯多夫，1908年他在瑞士将劳力士注册为商标。
+				</dd>
+				<dt>
+					Vacheron Constantin
+				</dt>
+				<dd>
+					始创于1775年的江诗丹顿已有250年历史，
+				</dd>
+				<dd>
+					是世界上历史最悠久、延续时间最长的名表之一。
+				</dd>
+				<dt>
+					IWC
+				</dt>
+				<dd>
+					创立于1868年的万国表有“机械表专家”之称。
+				</dd>
+				<dt>
+					Cartier
+				</dt>
+				<dd>
+					卡地亚拥有150多年历史，是法国珠宝金银首饰的制造名家。
+				</dd>
+			</dl>
+		</div>
+		<div class="others col-md-2">
+             {% include 'blog/tags/base_right.html' %}
+		</div>
+	</div>
+</div>
+{% endblock %}

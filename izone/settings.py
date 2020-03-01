@@ -20,6 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # 添加 apps 目录
 sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
@@ -28,7 +29,7 @@ sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
 SECRET_KEY = os.getenv('IZONE_SECRET_KEY', '#!kta!9e0)24d@9#=*=ra$r!0k0+p5@w+a%7g1bbof9+ad@4_(')
 
 # 是否开启[在线工具]应用
-TOOL_FLAG = os.getenv('IZONE_TOOL_FLAG', 'True').upper() == 'TRUE'
+TOOL_FLAG = os.getenv('IZONE_TOOL_FLAG', 'False').upper() == 'TRUE'
 # 是否开启[API]应用
 API_FLAG = os.getenv('IZONE_API_FLAG', 'False').upper() == 'TRUE'
 
@@ -41,7 +42,9 @@ ALLOWED_HOSTS = ['*']
 
 # 添加了新的app需要重启服务器
 INSTALLED_APPS = [
-    'bootstrap_admin',  # 注册bootstrap后台管理界面,这个必须放在最前面
+    'simpleui',
+    'mdeditor',
+    # 'bootstrap_admin',  # 注册bootstrap后台管理界面,这个必须放在最前面
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -65,6 +68,7 @@ INSTALLED_APPS = [
 
     'crispy_forms',  # bootstrap表单样式
     'imagekit',  # 上传图片的应用
+    'course',
 
     'haystack',  # 全文搜索应用 这个要放在其他应用之前
     'blog',  # 博客应用
@@ -207,9 +211,9 @@ REST_FRAMEWORK = {
 
 # 配置数据库
 MYSQL_HOST = os.getenv('IZONE_MYSQL_HOST', '127.0.0.1')
-MYSQL_NAME = os.getenv('IZONE_MYSQL_NAME', 'izone')
+MYSQL_NAME = os.getenv('IZONE_MYSQL_NAME', 'blog')
 MYSQL_USER = os.getenv('IZONE_MYSQL_USER', 'root')
-MYSQL_PASSWORD = os.getenv('IZONE_MYSQL_PASSWORD', 'python')
+MYSQL_PASSWORD = os.getenv('IZONE_MYSQL_PASSWORD', 'niuheng')
 MYSQL_PORT = os.getenv('IZONE_MYSQL_PORT', 3306)
 
 DATABASES = {
@@ -258,14 +262,14 @@ EMAIL_USE_SSL = os.getenv('IZONE_EMAIL_USE_SSL', 'True').upper() == 'TRUE'
 DEFAULT_FROM_EMAIL = os.getenv('IZONE_DEFAULT_FROM_EMAIL', 'TendCode博客 <your-email-address>')
 
 # 网站默认设置和上下文信息
-SITE_LOGO_NAME = os.getenv('IZONE_LOGO_NAME', 'TendCode')
-SITE_END_TITLE = os.getenv('IZONE_SITE_END_TITLE', 'izone')
-SITE_DESCRIPTION = os.getenv('IZONE_SITE_DESCRIPTION', 'izone 是一个使用 Django+Bootstrap4 搭建的个人博客类型网站')
-SITE_KEYWORDS = os.getenv('IZONE_SITE_KEYWORDS', 'izone,Django博客,个人博客')
+SITE_LOGO_NAME = os.getenv('IZONE_LOGO_NAME', '学海无涯')
+SITE_END_TITLE = os.getenv('IZONE_SITE_END_TITLE', '牛恒的个人博客')
+SITE_DESCRIPTION = os.getenv('IZONE_SITE_DESCRIPTION', '个人博客类型网站')
+SITE_KEYWORDS = os.getenv('IZONE_SITE_KEYWORDS', 'python study Django博客,个人博客')
 
 # 个性化设置，非必要信息
 # 个人 Github 地址
-MY_GITHUB = os.getenv('IZONE_GITHUB', 'https://github.com/Hopetree')
+MY_GITHUB = os.getenv('IZONE_GITHUB', 'https://github.com/HengCodes/')
 # 工信部备案信息
 BEIAN = os.getenv('IZONE_BEIAN', '网站备案信息')
 # 站长统计（友盟）

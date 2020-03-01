@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
-from oauth.models import Ouser
 from rest_framework import serializers
+
 from blog.models import Article, Tag, Category, Timeline
+from course.models import CourseTopic
+from oauth.models import Ouser
 from tool.models import ToolLink, ToolCategory
 
 
@@ -16,6 +18,12 @@ class UserSerializer(serializers.ModelSerializer):
 class TagSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tag
+        fields = '__all__'
+
+
+class CourseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CourseTopic
         fields = '__all__'
 
 

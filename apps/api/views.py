@@ -4,8 +4,9 @@
 from oauth.models import Ouser
 from blog.models import Article, Tag, Category, Timeline
 from tool.models import ToolLink
+from course.models import CourseTopic
 from .serializers import (UserSerializer, ArticleSerializer,
-                          TimelineSerializer,TagSerializer,CategorySerializer,ToolLinkSerializer)
+                          TimelineSerializer,TagSerializer,CategorySerializer,ToolLinkSerializer,CourseSerializer)
 from rest_framework import viewsets, permissions
 from rest_framework.permissions import DjangoModelPermissionsOrAnonReadOnly
 # from .permissions import IsAdminUserOrReadOnly
@@ -14,6 +15,12 @@ from rest_framework.permissions import DjangoModelPermissionsOrAnonReadOnly
 class UserListSet(viewsets.ModelViewSet):
     queryset = Ouser.objects.all()
     serializer_class = UserSerializer
+    permission_classes = (DjangoModelPermissionsOrAnonReadOnly,)
+
+
+class CourseListSet(viewsets.ModelViewSet):
+    queryset = CourseTopic.objects.all()
+    serializer_class = CourseSerializer
     permission_classes = (DjangoModelPermissionsOrAnonReadOnly,)
 
 class ArticleListSet(viewsets.ModelViewSet):

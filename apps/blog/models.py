@@ -3,8 +3,7 @@ from django.conf import settings
 from django.shortcuts import reverse
 import markdown
 import re
-
-
+from mdeditor.fields import MDTextField
 # Create your models here.
 
 # 文章关键词，用来作为SEO中keywords
@@ -68,10 +67,10 @@ class Category(models.Model):
 # 文章
 class Article(models.Model):
     IMG_LINK = '/static/blog/img/summary.png'
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='作者', on_delete=models.PROTECT)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='作者', on_delete=models.PROTECT,null=True,blank=True)
     title = models.CharField(max_length=150, verbose_name='文章标题')
     summary = models.TextField('文章摘要', max_length=230, default='文章摘要等同于网页description内容，请务必填写...')
-    body = models.TextField(verbose_name='文章内容')
+    body =MDTextField(verbose_name='文章内容')
     img_link = models.CharField('图片地址', default=IMG_LINK, max_length=255)
     create_date = models.DateTimeField(verbose_name='创建时间', auto_now_add=True)
     update_date = models.DateTimeField(verbose_name='修改时间', auto_now=True)
@@ -79,7 +78,7 @@ class Article(models.Model):
     slug = models.SlugField(unique=True)
     is_top = models.BooleanField('置顶', default=False)
 
-    category = models.ForeignKey(Category, verbose_name='文章分类', on_delete=models.PROTECT)
+    category = models.ForeignKey(Category, verbose_name='文章分类', on_delete=models.PROTECT,null=True,blank=True)
     tags = models.ManyToManyField(Tag, verbose_name='标签')
     keywords = models.ManyToManyField(Keyword, verbose_name='文章关键词',
                                       help_text='文章关键词，用来作为SEO中keywords，最好使用长尾词，3-4个足够')

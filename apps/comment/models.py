@@ -58,7 +58,7 @@ def get_emoji_imgs(body):
 
 class Comment(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='%(class)s_related',
-                               verbose_name='评论人', on_delete=models.CASCADE)
+                               verbose_name='评论人', on_delete=models.CASCADE,null=True,blank=True)
     create_date = models.DateTimeField('创建时间', auto_now_add=True)
     content = models.TextField('评论内容')
     parent = models.ForeignKey('self', verbose_name='父评论', related_name='%(class)s_child_comments', blank=True,
@@ -85,7 +85,7 @@ class Comment(models.Model):
 
 class ArticleComment(Comment):
     belong = models.ForeignKey(Article, related_name='article_comments', verbose_name='所属文章',
-                               on_delete=models.CASCADE)
+                               on_delete=models.CASCADE,default="niuheng")
 
     class Meta:
         verbose_name = '文章评论'
@@ -95,11 +95,11 @@ class ArticleComment(Comment):
 
 class Notification(models.Model):
     create_p = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='提示创建者', related_name='notification_create',
-                                 on_delete=models.CASCADE)
+                                 on_delete=models.CASCADE,null=True,blank=True)
     get_p = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='提示接收者', related_name='notification_get',
-                              on_delete=models.CASCADE)
+                              on_delete=models.CASCADE,null=True,blank=True)
     comment = models.ForeignKey(ArticleComment, verbose_name='所属评论', related_name='the_comment',
-                                on_delete=models.CASCADE)
+                                on_delete=models.CASCADE,null=True,blank=True)
     create_date = models.DateTimeField('提示时间', auto_now_add=True)
     is_read = models.BooleanField('是否已读', default=False)
 

@@ -1,0 +1,22 @@
+{% load course_tags %}
+
+{% get_topics as topics %}
+{% url 'course:course_list' as course_list_url %}
+{% for each_topic in topics %}
+    <div class="card">
+        <div class="item-box">
+            <div class="item-box_imageContainer" style="float:left;"><a href="{{ course_list_url }}" target="_blank"><img
+                                                                                           class="cover" height="152" width="300"
+                                                                                           src={{ each_topic.img_link }}></a>
+            </div>
+            <div class="item-box_content" style="width:300px;float:left;"><h3><a class="item-box_title" href="{{ course_list_url }}" target="_blank">{{ each_topic.title }}</a>
+            </h3>
+                <div class="item-box_category"><span><a target="_blank" href="{{ each_topic.img_link }}">{{ each_topic.category }}</a></span></div>
+                <div class="intro"> {{  each_topic.summary }}
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+{% endfor %}

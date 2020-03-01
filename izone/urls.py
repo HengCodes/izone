@@ -33,10 +33,11 @@ sitemaps = {
 
 urlpatterns = [
     path('favicon.ico', RedirectView.as_view(url='/static/blog/img/favicon.ico')),
-    path('adminx/', admin.site.urls),
+    path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),  # allauth
     path('accounts/', include(('oauth.urls', 'oauth'), namespace='oauth')),  # oauth,只展现一个用户登录界面
     path('', include(('blog.urls', 'blog'), namespace='blog')),  # blog
+    path('course/', include(('course.urls', 'course'), namespace='course')),  # comment
     path('comment/',include(('comment.urls', 'comment'),namespace='comment')), # comment
     path('robots.txt', robots, name='robots'), # robots
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'), # 网站地图
