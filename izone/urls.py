@@ -37,11 +37,11 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),  # allauth
     path('accounts/', include(('oauth.urls', 'oauth'), namespace='oauth')),  # oauth,只展现一个用户登录界面
     path('', include(('blog.urls', 'blog'), namespace='blog')),  # blog
-    path('course/', include(('course.urls', 'course'), namespace='course')),  # comment
     path('comment/',include(('comment.urls', 'comment'),namespace='comment')), # comment
     path('robots.txt', robots, name='robots'), # robots
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'), # 网站地图
     path('feed/', AllArticleRssFeed(), name='rss'),   # rss订阅
+    path('mdeditor/', include('mdeditor.urls'))
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)  # 加入这个才能显示media文件
 
 if settings.API_FLAG:
@@ -50,3 +50,7 @@ if settings.API_FLAG:
 
 if settings.TOOL_FLAG:
     urlpatterns.append(path('tool/', include(('tool.urls', 'tool'),namespace='tool')))    # tool
+
+if settings.DEBUG:
+    # static files (images, css, javascript, etc.)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

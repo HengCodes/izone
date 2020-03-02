@@ -1,7 +1,8 @@
 from django.contrib import admin
+
 from .models import (Article, Tag, Category, Timeline,
                      Carousel, Silian, Keyword, FriendLink,
-                     AboutBlog)
+                     AboutBlog, Course)
 
 
 @admin.register(Article)
@@ -18,7 +19,7 @@ class ArticleAdmin(admin.ModelAdmin):
     list_display_links = ('title',)
 
     # 激活过滤器，这个很有用
-    list_filter = ('create_date', 'category', 'is_top')
+    list_filter = ('create_date', 'category', 'is_top', 'course')
 
     list_per_page = 50  # 控制每页显示的对象数量，默认是100
 
@@ -39,6 +40,11 @@ class TagAdmin(admin.ModelAdmin):
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
+    list_display = ('name', 'id', 'slug')
+
+
+@admin.register(Course)
+class CourseAdmin(admin.ModelAdmin):
     list_display = ('name', 'id', 'slug')
 
 

@@ -68,7 +68,6 @@ INSTALLED_APPS = [
 
     'crispy_forms',  # bootstrap表单样式
     'imagekit',  # 上传图片的应用
-    'course',
 
     'haystack',  # 全文搜索应用 这个要放在其他应用之前
     'blog',  # 博客应用
@@ -184,8 +183,14 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # 媒体文件收集
+
+X_FRAME_OPTIONS = 'SAMEORIGIN'
+
+
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
+
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
 
 # 统一分页设置
 BASE_PAGE_BY = 10

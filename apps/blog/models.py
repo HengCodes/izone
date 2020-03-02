@@ -42,6 +42,32 @@ class Tag(models.Model):
         return Article.objects.filter(tags=self)
 
 
+# 教程分类
+class Course(models.Model):
+    IMG_LINK = '/static/blog/img/summary.png'
+    name = models.CharField('教程分类', max_length=20)
+    slug = models.SlugField(unique=True)
+    description = models.TextField('描述', max_length=240, default=settings.SITE_DESCRIPTION,
+                                   help_text='用来作为SEO中description,长度参考SEO标准')
+    img_link = models.CharField('图片地址', default=IMG_LINK, max_length=255)
+
+    class Meta:
+        verbose_name = '教程分类'
+        verbose_name_plural = verbose_name
+        ordering = ['name']
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse('blog:course', kwargs={'slug': self.slug})
+
+    def get_article_list(self):
+        return Article.objects.filter(course=self)
+
+
+
+
 # 文章分类
 class Category(models.Model):
     name = models.CharField('文章分类', max_length=20)
@@ -79,6 +105,7 @@ class Article(models.Model):
     is_top = models.BooleanField('置顶', default=False)
 
     category = models.ForeignKey(Category, verbose_name='文章分类', on_delete=models.PROTECT,null=True,blank=True)
+    course = models.ForeignKey(Course, verbose_name='教程分类', on_delete=models.PROTECT,null=True,blank=True)
     tags = models.ManyToManyField(Tag, verbose_name='标签')
     keywords = models.ManyToManyField(Keyword, verbose_name='文章关键词',
                                       help_text='文章关键词，用来作为SEO中keywords，最好使用长尾词，3-4个足够')

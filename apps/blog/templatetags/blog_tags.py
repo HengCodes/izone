@@ -1,10 +1,12 @@
 # 创建了新的tags标签文件后必须重启服务器
 
+import re
+
 from django import template
-from ..models import Article, Category, Tag, Carousel, FriendLink
 from django.db.models.aggregates import Count
 from django.utils.html import mark_safe
-import re
+
+from ..models import Article, Category, Tag, Carousel, FriendLink, Course
 
 register = template.Library()
 
@@ -39,6 +41,12 @@ def get_tag_list():
 def get_category_list():
     '''返回分类列表'''
     return Category.objects.annotate(total_num=Count('article')).filter(total_num__gt=0)
+
+
+@register.simple_tag
+def get_course_list():
+    '''返回教程列表'''
+    return Course.objects.annotate(total_num=Count('article')).filter(total_num__gt=0)
 
 
 @register.inclusion_tag('blog/tags/article_list.html')

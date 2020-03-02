@@ -1,17 +1,17 @@
+import time
+
+import markdown
+from django.conf import settings
+from django.core.cache import cache
 from django.shortcuts import get_object_or_404, render
 from django.utils.text import slugify
 from django.views import generic
-from django.conf import settings
-from .models import Article, Tag, Category, Timeline, Silian, AboutBlog
-from .utils import site_full_url
-from django.core.cache import cache
-
-from markdown.extensions.toc import TocExtension  # 锚点的拓展
-import markdown
-import time, datetime
-
 from haystack.generic_views import SearchView  # 导入搜索视图
 from haystack.query import SearchQuerySet
+from markdown.extensions.toc import TocExtension  # 锚点的拓展
+
+from .models import Article, Tag, Category, Timeline, Silian, AboutBlog, Course
+from .utils import site_full_url
 
 
 # Create your views here.
@@ -40,6 +40,10 @@ class IndexView(generic.ListView):
         if sort == 'v':
             return ('-views', '-update_date', '-id')
         return ('-is_top', '-create_date')
+
+
+def CourseListView(request):
+    return render(request, 'course/course_list.html')
 
 
 class DetailView(generic.DetailView):
@@ -80,6 +84,33 @@ class DetailView(generic.DetailView):
             obj.toc = md.toc
             cache.set(md_key, (obj.body, obj.toc), 60 * 60 * 12)
         return obj
+
+
+class CourseView(generic.ListView):
+    model = Article
+    template_name = 'blog/course.html'
+    context_object_name = 'articles'
+    paginate_by = getattr(settings, 'BASE_PAGE_BY', None)
+    paginate_orphans = getattr(settings, 'BASE_ORPHANS', 0)
+
+    def get_ordering(self):
+        ordering = super(CourseView, self).get_ordering()
+        sort = self.kwargs.get('sort')
+        if sort == 'v':
+            return ('-views', '-update_date', '-id')
+        return ordering
+
+    def get_queryset(self, **kwargs):
+        queryset = super(CourseView, self).get_queryset()
+        cate = get_object_or_404(Course, slug=self.kwargs.get('slug'))
+        return queryset.filter(course=cate)
+
+    def get_context_data(self, **kwargs):
+        context_data = super(CourseView, self).get_context_data()
+        cate = get_object_or_404(Course, slug=self.kwargs.get('slug'))
+        context_data['search_tag'] = '教程分类'
+        context_data['search_instance'] = cate
+        return context_data
 
 
 class CategoryView(generic.ListView):

@@ -85,7 +85,7 @@ class Comment(models.Model):
 
 class ArticleComment(Comment):
     belong = models.ForeignKey(Article, related_name='article_comments', verbose_name='所属文章',
-                               on_delete=models.CASCADE,default="niuheng")
+                               on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = '文章评论'
